@@ -2,6 +2,7 @@ cmake_minimum_required(VERSION 3.6)
 enable_language(C CXX)
 
 set(APP_NAME "ImGuiIgclApp")
+set(EXE_NAME "${APP_NAME}")
 
 project(${APP_NAME})
 
@@ -89,6 +90,7 @@ source_group("Header Files\\igcl" FILES
 set(CMAKE_CXX_STANDARD 17)
 
 add_executable(${APP_NAME} WIN32 ${SOURCE_FILES} ${SOURCE_FILES_INTEL} ${SOURCE_FILES_IMGUI} ${SOURCE_FILES_IGCL} ${HEADER_FILES} ${HEADER_FILES_INTEL} ${HEADER_FILES_IMGUI} ${HEADER_FILES_IGCL})
+set_target_properties(${APP_NAME} PROPERTIES OUTPUT_NAME ${EXE_NAME})
 
 set_property(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT ${APP_NAME})
 

@@ -1,5 +1,3 @@
-# imgui-igcl
-
 # Introduction
 
 A boilerplate for ImGui and Intel Control Library Windows applications.
@@ -13,3 +11,16 @@ A boilerplate for ImGui and Intel Control Library Windows applications.
 ``` bash
 git clone https://github.com/rk020/imgui-igcl.git
 ```
+
+*Update your app name in `src/CMakeLists.txt` file:*
+
+``` CMake
+cmake_minimum_required(VERSION 3.6)
+enable_language(C CXX)
+
+set(APP_NAME "ImGuiIgclApp")  # Replace ImGuiIgclApp with your app name
+set(EXE_NAME "${APP_NAME}")
+
+```
+
+*Generate the solution by running `generate.bat`. Solution will be generated in a new temporary directory `_build`*
