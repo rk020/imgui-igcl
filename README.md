@@ -12,6 +12,12 @@ A boilerplate for ImGui and Intel Control Library Windows applications.
 git clone https://github.com/rk020/imgui-igcl.git
 ```
 
+*Download the required submodules*
+
+``` bash
+update.bat
+```
+
 *Update your app name in `src/CMakeLists.txt` file:*
 
 ``` CMake

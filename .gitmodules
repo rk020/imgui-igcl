@@ -4,3 +4,6 @@
 [submodule "submodules/drivers.gpu.control-library"]
 	path = submodules/drivers.gpu.control-library
 	url = https://github.com/intel/drivers.gpu.control-library.git
+[submodule "submodules/implot"]
+	path = submodules/implot
+	url = https://github.com/epezent/implot.git

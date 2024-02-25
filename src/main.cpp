@@ -1,6 +1,8 @@
 #include "imgui.h"
 #include "imgui_impl_win32.h"
 #include "imgui_impl_dx12.h"
+#include "implot.h"
+#include "implot_internal.h"
 #include <d3d12.h>
 #include <dxgi1_4.h>
 #include <string>
@@ -70,7 +72,8 @@ int APIENTRY WinMain(HINSTANCE hInst, HINSTANCE hInstPrev, PSTR cmdline, int cmd
     };
     RegisterClassExW(&wc);
     HWND hwnd = ::CreateWindowW(wc.lpszClassName, L"ImGUI IGCL Sample App",
-                                WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU | WS_THICKFRAME | WS_MINIMIZEBOX | WS_MAXIMIZEBOX,
+                                WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU | WS_THICKFRAME | WS_MINIMIZEBOX |
+                                WS_MAXIMIZEBOX,
                                 200, 200,
                                 800, 400, nullptr, nullptr, wc.hInstance, nullptr);
 
@@ -89,6 +92,7 @@ int APIENTRY WinMain(HINSTANCE hInst, HINSTANCE hInstPrev, PSTR cmdline, int cmd
     // Setup Dear ImGui context
     IMGUI_CHECKVERSION();
     ImGui::CreateContext();
+    ImPlot::CreateContext();
     ImGuiIO& io = ImGui::GetIO();
     (void)io;
     io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard; // Enable Keyboard Controls
@@ -106,8 +110,8 @@ int APIENTRY WinMain(HINSTANCE hInst, HINSTANCE hInstPrev, PSTR cmdline, int cmd
                         g_pd3dSrvDescHeap->GetGPUDescriptorHandleForHeapStart());
 
     // Load Fonts
-    ImFont* font = io.Fonts->AddFontFromFileTTF("../submodules/imgui/misc/fonts/Roboto-Medium.ttf", 18.0f);
-    IM_ASSERT(font != nullptr);
+    // ImFont* font = io.Fonts->AddFontFromFileTTF("../submodules/imgui/misc/fonts/Roboto-Medium.ttf", 18.0f);
+    // IM_ASSERT(font != nullptr);
 
     // Our state
     ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
@@ -149,7 +153,7 @@ int APIENTRY WinMain(HINSTANCE hInst, HINSTANCE hInstPrev, PSTR cmdline, int cmd
             if (ImGui::Combo("##combo1", &currentAdapter, [](void* vec, int idx, const char** out_text)
             {
                 const std::vector<DisplayAdapter>& adapter = *static_cast<std::vector<DisplayAdapter>*>(vec);
-                if (idx >= 0 && idx < adapter.size())
+                if (idx >= 0 && idx < static_cast<int>(adapter.size()))
                 {
                     *out_text = adapter[idx].Name.c_str();
                     return true;
@@ -168,7 +172,7 @@ int APIENTRY WinMain(HINSTANCE hInst, HINSTANCE hInstPrev, PSTR cmdline, int cmd
             if (ImGui::Combo("##combo2", &currentPanel, [](void* vec, int idx, const char** out_text)
             {
                 const std::vector<DisplayPanel>& panel = *static_cast<std::vector<DisplayPanel>*>(vec);
-                if (idx >= 0 && idx < panel.size())
+                if (idx >= 0 && idx < static_cast<int>(panel.size()))
                 {
                     *out_text = panel[idx].Name.c_str();
                     return true;
@@ -233,6 +237,7 @@ int APIENTRY WinMain(HINSTANCE hInst, HINSTANCE hInstPrev, PSTR cmdline, int cmd
     // Cleanup
     ImGui_ImplDX12_Shutdown();
     ImGui_ImplWin32_Shutdown();
+    ImPlot::DestroyContext();
     ImGui::DestroyContext();
 
     CleanupDeviceD3D();
